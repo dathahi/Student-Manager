@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./BE_java
+      dockerfile: Dockerfile
+    container_name: student_backend
+    ports: 
+      - "8080:8080"
+    # environment:
+    #   - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - student-network
+
+  frontend:
+    build:
+      context: ./FE_react/student-frontend
+      dockerfile: Dockerfile
+    container_name: student-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - student-network
+networks:
+  student-network:
+    driver: bridge
