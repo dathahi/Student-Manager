@@ -1,6 +1,6 @@
 ARG JAVA_VERSION=17
 
-FROM maven:3.9-eclipse-temurin-${JAVA_VERSION} AS build 
+FROM maven:3.9.9-eclipse-temurin-${JAVA_VERSION} AS build 
 
 WORKDIR /app
 
