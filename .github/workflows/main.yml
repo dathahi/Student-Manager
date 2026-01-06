@@ -6,7 +6,7 @@ on:
       - "feature/ci-pipeline"
 jobs:
 
-  build:
+  build-be:
     runs-on: ubuntu-latest
     
     steps:
@@ -20,7 +20,28 @@ jobs:
       - name: Build with Maven
         run: |
           cd BE_java
-          mvn -B -U verify       
-          
+          mvn -B -U verify
+  build-fe: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v6.1.0
+        with: 
+          cache: 'npm'
+          node-version: '18'
+          cache-dependency-path: 'package-lock.json'
+      - name: Install deps
+        run: |
+          cd FE_react
+          npm ci
+
+      - name: Build FE
+        run: |
+          cd FE_react
+          npm run build
+ 
+         
           
           
