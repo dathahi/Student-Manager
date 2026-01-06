@@ -1,0 +1,74 @@
+name: ci-main
+
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+
+  build_be:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Java JDK 
+        uses: actions/setup-java@v5.1.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build with Maven
+        env: 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          cd BE_java
+          mvn -B -U verify sonar:sonar \   -Dsonar.qualitygate.wait=true
+  build_fe: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v6.1.0
+        with: 
+          cache: 'npm'
+          node-version: '18'
+          cache-dependency-path: FE_react/student-frontend/package-lock.json
+      - name: Install deps
+        run: |
+          cd FE_react/student-frontend
+          npm ci
+
+      - name: Build FE
+        run: |
+          cd FE_react/student-frontend
+          npm run build
+  
+  docker:
+    runs-on: ubuntu-latest
+    needs: [build_be, build_fe]  
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Login DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & push BE image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./BE_java
+          push: true
+          tags: dathahi/student-manager-be:latest
+
+      - name: Build & push FE image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./FE_react/student-frontend
+          push: true
+          tags: dathahi/student-manager-fe:latest
+    
+          
