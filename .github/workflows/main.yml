@@ -34,12 +34,12 @@ jobs:
           cache-dependency-path: FE_react/student-frontend/package-lock.json
       - name: Install deps
         run: |
-          cd FE_react
+          cd FE_react/student-frontend
           npm ci
 
       - name: Build FE
         run: |
-          cd FE_react
+          cd FE_react/student-frontend
           npm run build
  
          
