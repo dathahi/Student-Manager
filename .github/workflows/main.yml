@@ -70,7 +70,7 @@ jobs:
           push: true
           tags: 
             dathahi/student-manager-be:latest
-            dathahi/student-manager-be:v1.0.${{ github.run_number }}
+            dathahi/student-manager-be:1.0.${{ github.run_number }}
 
       - name: Build & push FE image
         uses: docker/build-push-action@v5
@@ -79,6 +79,6 @@ jobs:
           push: true
           tags: 
             dathahi/student-manager-fe:latest
-            dathahi/student-manager-fe:v1.0.${{ github.run_number }}
+            dathahi/student-manager-fe:1.0.${{ github.run_number }}
     
           
