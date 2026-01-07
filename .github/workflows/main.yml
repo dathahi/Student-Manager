@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Setup Java JDK 
         uses: actions/setup-java@v5.1.0
         with:
