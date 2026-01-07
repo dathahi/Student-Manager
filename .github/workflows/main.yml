@@ -23,7 +23,11 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
           cd BE_java
-          mvn -B -U verify sonar:sonar \   -Dsonar.qualitygate.wait=true
+          # mvn -B -U verify sonar:sonar \   -Dsonar.qualitygate.wait=true
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=Student_manager \
+          -Dsonar.host.url=$SONAR_HOST_URL   \
+          -Dsonar.token=$SONAR_TOKEN
   build_fe: 
     runs-on: ubuntu-latest
 
