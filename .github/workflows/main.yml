@@ -68,13 +68,17 @@ jobs:
         with:
           context: ./BE_java
           push: true
-          tags: dathahi/student-manager-be:latest
+          tags: 
+            dathahi/student-manager-be:latest
+            dathahi/student-manager-be:v1.0.${{ github.run_number }}
 
       - name: Build & push FE image
         uses: docker/build-push-action@v5
         with:
           context: ./FE_react/student-frontend
           push: true
-          tags: dathahi/student-manager-fe:latest
+          tags: 
+            dathahi/student-manager-fe:latest
+            dathahi/student-manager-fe:v1.0.${{ github.run_number }}
     
           
