@@ -69,7 +69,7 @@ jobs:
           context: ./BE_java
           push: true
           tags: 
-            dathahi/student-manager-be:latest
+            dathahi/student-manager-be:latest,
             dathahi/student-manager-be:1.0.${{ github.run_number }}
 
       - name: Build & push FE image
@@ -78,7 +78,7 @@ jobs:
           context: ./FE_react/student-frontend
           push: true
           tags: 
-            dathahi/student-manager-fe:latest
+            dathahi/student-manager-fe:latest,
             dathahi/student-manager-fe:1.0.${{ github.run_number }}
     
           
